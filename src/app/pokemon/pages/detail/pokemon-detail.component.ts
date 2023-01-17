@@ -51,10 +51,6 @@ export class PokemonDetailComponent implements OnInit {
       const pokemon: Pokemon = {
         name: this.pokemonForm.get('name')?.value,
         weight: this.pokemonForm.get('weight')?.value,
-        species: {
-          name: this.pokemonForm.get('name')?.value,
-          url: ''
-        },
         types: this.pokemonForm.get('types')?.value.map((type: string) => ({type: {name: type, url: ''}}))
       }
       this.pokemonService.addPokemon(pokemon).subscribe(() => this.goBack());

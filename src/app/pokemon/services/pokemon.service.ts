@@ -22,8 +22,7 @@ export class PokemonService {
         this.pokemonData = data.results
           .map((pokemon: BasicInfo) => {
             return {
-              name: pokemon.name,
-              species: pokemon,
+              name: pokemon.name
             } as Pokemon;
           })
           .filter((pokemon: Pokemon) => pokemon.name.includes(filter));

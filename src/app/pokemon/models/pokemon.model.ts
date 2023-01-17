@@ -50,7 +50,6 @@ export interface BasicInfo {
 export interface Pokemon {
   id?: number;
   name: string;
-  species: BasicInfo;
   sprites?: Sprites;
   types?: Type[];
   weight?: number;
