@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PokemonService} from '../../services/pokemon.service';
-import {BasicInfo, GenericResponse, PokemonDetailLabels} from '../../models/pokemon.model';
+import {BasicInfo, GenericResponse, Pokemon, PokemonDetailLabels} from '../../models/pokemon.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Location} from '@angular/common';
 
@@ -48,17 +48,16 @@ export class PokemonDetailComponent implements OnInit {
 
   public savePokemon() {
     if (this.pokemonForm.valid) {
-      this.pokemonService.addPokemon(
-        {
+      const pokemon: Pokemon = {
+        name: this.pokemonForm.get('name')?.value,
+        weight: this.pokemonForm.get('weight')?.value,
+        species: {
           name: this.pokemonForm.get('name')?.value,
-          weight: this.pokemonForm.get('weight')?.value,
-          species: {
-            name: this.pokemonForm.get('name')?.value,
-            url: ''
-          },
-          types: [{type: {name: this.pokemonForm.get('types')?.value}}]
-        }
-      ).subscribe(() => this.goBack());
+          url: ''
+        },
+        types: this.pokemonForm.get('types')?.value.map((type: string) => ({type: {name: type, url: ''}}))
+      }
+      this.pokemonService.addPokemon(pokemon).subscribe(() => this.goBack());
     }
   }
 

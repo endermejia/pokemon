@@ -68,7 +68,7 @@
           {{labels.table.type}}
         </th>
         <td mat-cell *matCellDef="let pokemonElement">
-          {{getTypesLabels(pokemonElement.types)}}
+          {{getTypesLabels(pokemonElement.types) | uppercase}}
         </td>
       </ng-container>
       <!-- img -->

@@ -89,7 +89,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     const first = pageIndex * pageSize;
     const last = first + pageSize;
     for (let i = first; i < last; i++) {
-      if (this.pokemon.data[i]) {
+      if (this.pokemon.data[i] && this.pokemon.data[i]?.species?.url && !this.pokemon.data[i]?.weight) {
         this.pokemonService.getPokemonDataByName(this.pokemon.data[i].name).subscribe(
           (pokemon: Pokemon) => {
             this.pokemon.data[i] = pokemon;

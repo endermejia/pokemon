@@ -9,15 +9,7 @@ import {Pokemon, BasicInfo, GenericResponse} from '../models/pokemon.model';
 export class PokemonService {
 
   public pokemonData: Pokemon[] = [];
-  public addedPokemonData: Pokemon[] = [
-    {
-      name: 'bulbasaur111',
-      species: {
-        name: 'bulbasaur222',
-        url: 'https://pokeapi.co/api/v2/pokemon-species/1/'
-      }
-    }
-  ];
+  public addedPokemonData: Pokemon[] = [];
   public showSpinner: boolean = false;
 
   constructor(private http: HttpClient) {
@@ -48,9 +40,11 @@ export class PokemonService {
       if (!this.addedPokemonData.includes(pokemon)) {
         this.addedPokemonData.push(pokemon);
       }
-      observer.next(pokemon);
-      debugger
-      this.showSpinner = false;
+      // delay 1 second to show spinner
+      setTimeout(() => {
+        this.showSpinner = false;
+        observer.next(pokemon);
+      }, 1000);
     });
   }
 
