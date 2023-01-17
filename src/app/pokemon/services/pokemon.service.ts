@@ -8,20 +8,34 @@ import {Pokemon, BasicInfo, GenericResponse} from '../models/pokemon.model';
 })
 export class PokemonService {
 
-  public pokemonData: BasicInfo[] = [];
-  public addedPokemonData: Pokemon[] = [];
+  public pokemonData: Pokemon[] = [];
+  public addedPokemonData: Pokemon[] = [
+    {
+      name: 'bulbasaur111',
+      species: {
+        name: 'bulbasaur222',
+        url: 'https://pokeapi.co/api/v2/pokemon-species/1/'
+      }
+    }
+  ];
   public showSpinner: boolean = false;
 
   constructor(private http: HttpClient) {
   }
 
-  public getPokemons(filter: string): Observable<BasicInfo[]> {
+  public getPokemons(filter: string): Observable<Pokemon[]> {
     this.showSpinner = true;
-    return new Observable<BasicInfo[]>((observer: Subscriber<BasicInfo[]>) => {
+    return new Observable<Pokemon[]>((observer: Subscriber<Pokemon[]>) => {
       this.getPokemonBasicData().subscribe((data: GenericResponse) => {
-        this.pokemonData = data.results.filter((pokemon: BasicInfo) =>
-          pokemon.name.toLowerCase().includes(filter.toLowerCase())
-        );
+        this.pokemonData = data.results
+          .map((pokemon: BasicInfo) => {
+            return {
+              name: pokemon.name,
+              species: pokemon,
+            } as Pokemon;
+          })
+          .filter((pokemon: Pokemon) => pokemon.name.includes(filter));
+        this.pokemonData = this.addedPokemonData.concat(this.pokemonData);
         observer.next(this.pokemonData);
         this.showSpinner = false;
       });
@@ -35,6 +49,7 @@ export class PokemonService {
         this.addedPokemonData.push(pokemon);
       }
       observer.next(pokemon);
+      debugger
       this.showSpinner = false;
     });
   }

@@ -11,12 +11,12 @@ export interface SearchLabels {
 }
 
 export interface PokemonDetailLabels {
-  alter_ego: string;
+  type: string;
   cancel: string;
-  first_appearance: string;
+  img: string;
   name: string;
   pokemon: string;
-  publisher: string;
+  weight: string;
   save: string;
   title: string;
   validation: ValidationLabels;

@@ -28,51 +28,29 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field class="margin-1em min-width-50">
-        <mat-label>{{labels.publisher}}</mat-label>
+        <mat-label>{{labels.weight}}</mat-label>
         <input
           matInput
           required
-          formControlName="publisher">
-        <mat-error *ngIf="pokemonForm.get('publisher')?.hasError('required')">
+          formControlName="weight">
+        <mat-error *ngIf="pokemonForm.get('weight')?.hasError('required')">
           {{labels.validation.required}}
-        </mat-error>
-        <mat-error *ngIf="pokemonForm.get('publisher')?.hasError('minlength')">
-          {{labels.validation.minLength}}
-        </mat-error>
-        <mat-error *ngIf="pokemonForm.get('publisher')?.hasError('maxlength')">
-          {{labels.validation.maxLength}}
         </mat-error>
       </mat-form-field>
       <mat-form-field class="margin-1em min-width-50">
-        <mat-label>{{labels.alter_ego}}</mat-label>
-        <input
-          matInput
+        <mat-label>{{labels.type}}</mat-label>
+        <mat-select
+          multiple
           required
-          formControlName="alter_ego">
-        <mat-error *ngIf="pokemonForm.get('alter_ego')?.hasError('required')">
+          formControlName="types">
+          <mat-option
+            *ngFor="let type of types"
+            [value]="type">
+            {{type}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="pokemonForm.get('types')?.hasError('required')">
           {{labels.validation.required}}
-        </mat-error>
-        <mat-error *ngIf="pokemonForm.get('alter_ego')?.hasError('minlength')">
-          {{labels.validation.minLength}}
-        </mat-error>
-        <mat-error *ngIf="pokemonForm.get('alter_ego')?.hasError('maxlength')">
-          {{labels.validation.maxLength}}
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field class="margin-1em min-width-50">
-        <mat-label>{{labels.first_appearance}}</mat-label>
-        <input
-          matInput
-          required
-          formControlName="first_appearance">
-        <mat-error *ngIf="pokemonForm.get('first_appearance')?.hasError('required')">
-          {{labels.validation.required}}
-        </mat-error>
-        <mat-error *ngIf="pokemonForm.get('first_appearance')?.hasError('minlength')">
-          {{labels.validation.minLength}}
-        </mat-error>
-        <mat-error *ngIf="pokemonForm.get('first_appearance')?.hasError('maxlength')">
-          {{labels.validation.maxLength}}
         </mat-error>
       </mat-form-field>
       <div class="custom-flex-container">

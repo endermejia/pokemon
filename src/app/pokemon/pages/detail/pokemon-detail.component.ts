@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PokemonService} from '../../services/pokemon.service';
-import {PokemonDetailLabels} from '../../models/pokemon.model';
+import {BasicInfo, GenericResponse, PokemonDetailLabels} from '../../models/pokemon.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Location} from '@angular/common';
 
@@ -16,9 +16,9 @@ export class PokemonDetailComponent implements OnInit {
     save: 'Guardar',
     pokemon: 'Pokemon',
     name: 'Nombre',
-    publisher: 'Editorial',
-    alter_ego: 'Alter ego',
-    first_appearance: 'Primera aparición',
+    weight: 'Peso',
+    type: 'Tipo',
+    img: 'Imagen',
     cancel: 'Cancelar',
     validation: {
       required: 'El campo es requerido',
@@ -27,12 +27,12 @@ export class PokemonDetailComponent implements OnInit {
     }
   }
 
+  public types: string[] = [];
+
   public pokemonForm: FormGroup = this.fb.group({
-    id: [''],
     name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-    publisher: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-    alter_ego: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-    first_appearance: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]]
+    weight: ['', [Validators.required, Validators.maxLength(10)]],
+    types: ['', Validators.required],
   });
 
   constructor(
@@ -43,16 +43,33 @@ export class PokemonDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getTypes();
   }
 
   public savePokemon() {
     if (this.pokemonForm.valid) {
-      this.pokemonService.addPokemon(this.pokemonForm.value).subscribe(() => this.goBack());
+      this.pokemonService.addPokemon(
+        {
+          name: this.pokemonForm.get('name')?.value,
+          weight: this.pokemonForm.get('weight')?.value,
+          species: {
+            name: this.pokemonForm.get('name')?.value,
+            url: ''
+          },
+          types: [{type: {name: this.pokemonForm.get('types')?.value}}]
+        }
+      ).subscribe(() => this.goBack());
     }
   }
 
   public goBack() {
     this.location.back();
+  }
+
+  private getTypes() {
+    this.pokemonService.getPokemonTypes().subscribe((types: GenericResponse) =>
+      this.types = types.results.map((type: BasicInfo) => type.name)
+    );
   }
 
 }

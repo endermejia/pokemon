@@ -35,7 +35,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   };
 
   public pokemon: MatTableDataSource<Pokemon> = new MatTableDataSource<Pokemon>([]);
-  public pageSize: number = 10;
+  public pageSize: number = 5;
   public displayedColumns: string[] = [
     this.labels.table.name,
     this.labels.table.weight,
@@ -69,13 +69,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
   public search(): void {
     if (this.searchForm.valid) {
       this.pokemonService.getPokemons(this.searchForm.value.filter).subscribe(
-        (pokemon: BasicInfo[]) => {
-          this.pokemon.data = pokemon.map((pokemon: BasicInfo) => {
-            return {
-              name: pokemon.name,
-              species: pokemon,
-            } as Pokemon;
-          });
+        (pokemon: Pokemon[]) => {
+          this.pokemon.data = pokemon;
           this.loadPokemonDataByPage(0, this.pageSize);
         }
       );
