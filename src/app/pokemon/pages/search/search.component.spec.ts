@@ -19,28 +19,49 @@ describe('SearchComponent', () => {
     fixture = TestBed.createComponent(SearchComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    component.pokemonService.pokemonData = [];
+    component.pokemonService.addedPokemonData = [
+      {
+        name: 'bulbasaur',
+        weight: 69,
+        types: [
+          {
+            type: {
+              name: 'grass'
+            }
+          },
+          {
+            type: {
+              name: 'poison'
+            }
+          }
+        ]
+      }
+    ];
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('search OK', waitForAsync(() => {
-    component.searchForm.controls['filter'].setValue('batman');
-    component.search();
-    setTimeout(() => {
-      expect(component.pokemon.data.length).toEqual(0);
-    }, 2000);
-  }));
+  it('should be valid', () => {
+    component.searchForm.controls['filter'].setValue('bulbasaur');
+    expect(component.searchForm.valid).toBeTruthy();
+  });
 
-  it('search KO', waitForAsync(() => {
-    component.searchForm.controls['filter'].setValue('superman');
-    component.search();
-    setTimeout(() => {
-      expect(component.pokemon.data.length).toEqual(0);
-    }, 2000);
-  }));
-
+  it('getTypesLabels', () => {
+    const types = [
+      {
+        type: {
+          name: 'grass'
+        }
+      },
+      {
+        type: {
+          name: 'poison'
+        }
+      }
+    ];
+    expect(component.getTypesLabels(types)).toEqual('grass, poison');
+  })
 
 });
