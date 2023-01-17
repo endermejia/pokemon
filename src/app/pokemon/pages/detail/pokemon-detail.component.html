@@ -1,0 +1,108 @@
+<!-- Start PokemonDetail form -->
+<mat-card
+  id="mat-card-pokemon-detail"
+  class="mat-elevation-z8 margin-1em max-width-80-em">
+  <mat-card-header>
+    <mat-card-title class="custom-title">
+      {{labels.title}}
+    </mat-card-title>
+  </mat-card-header>
+  <form
+    [formGroup]="pokemonForm"
+    (ngSubmit)="savePokemon()">
+    <div class="custom-container">
+      <mat-form-field class="margin-1em min-width-50">
+        <mat-label>{{labels.name}}</mat-label>
+        <input
+          matInput
+          required
+          formControlName="name">
+        <mat-error *ngIf="pokemonForm.get('name')?.hasError('required')">
+          {{labels.validation.required}}
+        </mat-error>
+        <mat-error *ngIf="pokemonForm.get('name')?.hasError('minlength')">
+          {{labels.validation.minLength}}
+        </mat-error>
+        <mat-error *ngIf="pokemonForm.get('name')?.hasError('maxlength')">
+          {{labels.validation.maxLength}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="margin-1em min-width-50">
+        <mat-label>{{labels.publisher}}</mat-label>
+        <input
+          matInput
+          required
+          formControlName="publisher">
+        <mat-error *ngIf="pokemonForm.get('publisher')?.hasError('required')">
+          {{labels.validation.required}}
+        </mat-error>
+        <mat-error *ngIf="pokemonForm.get('publisher')?.hasError('minlength')">
+          {{labels.validation.minLength}}
+        </mat-error>
+        <mat-error *ngIf="pokemonForm.get('publisher')?.hasError('maxlength')">
+          {{labels.validation.maxLength}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="margin-1em min-width-50">
+        <mat-label>{{labels.alter_ego}}</mat-label>
+        <input
+          matInput
+          required
+          formControlName="alter_ego">
+        <mat-error *ngIf="pokemonForm.get('alter_ego')?.hasError('required')">
+          {{labels.validation.required}}
+        </mat-error>
+        <mat-error *ngIf="pokemonForm.get('alter_ego')?.hasError('minlength')">
+          {{labels.validation.minLength}}
+        </mat-error>
+        <mat-error *ngIf="pokemonForm.get('alter_ego')?.hasError('maxlength')">
+          {{labels.validation.maxLength}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="margin-1em min-width-50">
+        <mat-label>{{labels.first_appearance}}</mat-label>
+        <input
+          matInput
+          required
+          formControlName="first_appearance">
+        <mat-error *ngIf="pokemonForm.get('first_appearance')?.hasError('required')">
+          {{labels.validation.required}}
+        </mat-error>
+        <mat-error *ngIf="pokemonForm.get('first_appearance')?.hasError('minlength')">
+          {{labels.validation.minLength}}
+        </mat-error>
+        <mat-error *ngIf="pokemonForm.get('first_appearance')?.hasError('maxlength')">
+          {{labels.validation.maxLength}}
+        </mat-error>
+      </mat-form-field>
+      <div class="custom-flex-container">
+        <div class="margin-1em">
+          <button
+            [disabled]="pokemonForm.invalid || pokemonForm.pristine"
+            mat-raised-button
+            type="submit"
+            color="primary">
+            {{labels.save}} {{labels.pokemon}}
+          </button>
+        </div>
+        <div class="margin-1em">
+          <button
+            mat-raised-button
+            type="button"
+            color="warn"
+            (click)="goBack()">
+            {{labels.cancel}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-card>
+<!-- End PokemonDetail form-->
+<!-- Start Spinner -->
+<ng-container *ngIf="pokemonService.showSpinner">
+  <div class="spinnerContainer">
+    <mat-spinner class="custom-mat-spinner"></mat-spinner>
+  </div>
+</ng-container>
+<!-- End Spinner -->
